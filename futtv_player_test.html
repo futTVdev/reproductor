@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FutTV | Reproductor</title>
+
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#080d18;
+  --panel:#111a2b;
+  --line:#26344b;
+  --muted:#9aa9bf;
+  --accent:#38bdf8
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+
+body{
+  background:radial-gradient(circle at top,#14233b 0,#080d18 55%);
+  color:#f8fafc;
+  font:16px/1.5 system-ui,Segoe UI,Arial,sans-serif;
+}
+
+.wrap{
+  width:min(1250px,calc(100% - 32px));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  padding:8px 0;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:12px;
+  flex-shrink:0;
+}
+
+.logo{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:-1.5px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.live{
+  border:1px solid #14532d;
+  background:#052e1a;
+  color:#86efac;
+  padding:5px 10px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+/* DISTRIBUCIÓN PRINCIPAL */
+
+.content{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  flex:1;
+  min-height:0;
+}
+
+/* REPRODUCTOR */
+
+.player-panel{
+  flex:1;
+  min-width:0;
+  background:rgba(17,26,43,.94);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:12px;
+  box-shadow:0 18px 50px #0005;
+}
+
+.screen{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  border:1px solid #263247;
+  border-radius:12px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+}
+
+iframe{
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  background:#000;
+}
+
+.placeholder{
+  text-align:center;
+  color:#aab7c9;
+  padding:20px;
+}
+
+.placeholder strong{
+  display:block;
+  color:#fff;
+  font-size:18px;
+  margin:8px 0;
+}
+
+/* PANEL DE DONACIONES */
+
+.donation-panel{
+  width:260px;
+  flex-shrink:0;
+  background:rgba(17,26,43,.96);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:24px 18px;
+  box-shadow:0 18px 50px #0005;
+  text-align:center;
+}
+
+.donation-icon{
+  font-size:38px;
+  margin-bottom:10px;
+}
+
+.donation-panel h2{
+  font-size:19px;
+  margin:0 0 12px;
+}
+
+.donation-panel p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin:0 0 20px;
+}
+
+.donation-button{
+  display:block;
+  width:100%;
+  padding:12px 10px;
+  border-radius:10px;
+  background:var(--accent);
+  color:#062033;
+  text-decoration:none;
+  font-weight:800;
+  font-size:14px;
+  transition:.2s;
+}
+
+.donation-button:hover{
+  background:#7dd3fc;
+  transform:translateY(-2px);
+}
+
+.donation-footer{
+  margin-top:15px;
+  color:#718096;
+  font-size:11px;
+}
+
+/* PANTALLAS PEQUEÑAS */
+
+@media(max-width:700px){
+
+  .wrap{
+    width:calc(100% - 16px);
+    padding:6px 0;
+  }
+
+  header{
+    margin-bottom:8px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+  .content{
+    gap:8px;
+  }
+
+  .donation-panel{
+    width:155px;
+    padding:14px 10px;
+  }
+
+  .donation-icon{
+    font-size:27px;
+  }
+
+  .donation-panel h2{
+    font-size:15px;
+  }
+
+  .donation-panel p{
+    font-size:11px;
+    margin-bottom:12px;
+  }
+
+  .donation-button{
+    font-size:12px;
+    padding:10px 5px;
+  }
+
+  .player-panel{
+    padding:6px;
+  }
+}
+
+@media(max-width:420px){
+
+  .content{
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  .player-panel{
+    width:100%;
+    flex:none;
+  }
+
+  .donation-panel{
+    width:100%;
+    padding:10px;
+  }
+
+  .donation-icon{
+    display:none;
+  }
+
+  .donation-panel h2{
+    margin-bottom:4px;
+  }
+
+  .donation-panel p{
+    margin-bottom:8px;
+  }
+
+  .donation-footer{
+    display:none;
+  }
+
+  .donation-button{
+    max-width:220px;
+    margin:auto;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<main class="wrap">
+
+<header>
+  <div class="logo">FUT<span>TV</span></div>
+  <div class="live">EN VIVO</div>
+</header>
+
+<div class="content">
+
+  <!-- REPRODUCTOR -->
+
+  <section class="player-panel">
+
+    <div class="screen" id="screen">
+
+      <div class="placeholder">
+        <div style="font-size:38px">▶</div>
+        <strong>Cargando transmisión...</strong>
+        <div>Preparando reproductor FutTV.</div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- DONACIONES -->
+
+  <aside class="donation-panel">
+
+    <div class="donation-icon">💙</div>
+
+    <h2>Apoya a FutTV</h2>
+
+    <p>
+      Tu apoyo nos ayuda a seguir creciendo
+      y mejorando nuestra plataforma.
+      ¡Cada donación cuenta!
+    </p>
+
+    <a
+      href="https://paypal.me/OficialFutTV"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="donation-button"
+    >
+      ♥ Donar ahora
+    </a>
+
+    <div class="donation-footer">
+      Gracias por apoyar a FutTV<br>
+      Disfruta el partido
+    </div>
+
+  </aside>
+
+</div>
+
+</main>
+
+<script>
+
+/* ==================================
+   CONFIGURACIÓN DEL PARTIDO ACTUAL
+================================== */
+
+const PARTIDO_ACTUAL = {
+
+  nombre: "Partido en directo",
+  enlace: "https://tvf90.com/canal.php?stream=espn",
+  //enlace: "https://tvf90.com/1.php?stream=foxsports2_usa",
+
+};
+
+/* ==================================
+   MOTOR DEL REPRODUCTOR
+================================== */
+
+const screen = document.getElementById("screen");
+
+function cargarPartido(){
+
+  let url;
+
+  try {
+    url = new URL(PARTIDO_ACTUAL.enlace);
+  } catch {
+    mostrarError("El enlace del partido no está configurado correctamente.");
+    return;
+  }
+
+  if(url.protocol !== "https:"){
+    mostrarError("El reproductor requiere una dirección HTTPS.");
+    return;
+  }
+
+  const frame = document.createElement("iframe");
+
+  frame.src = url.href;
+  frame.title = "Reproductor FutTV";
+  frame.allow = "autoplay; fullscreen; picture-in-picture";
+  frame.allowFullscreen = true;
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+
+  screen.replaceChildren(frame);
+
+}
+
+function mostrarError(mensaje){
+
+  screen.innerHTML = `
+    <div class="placeholder">
+      <div style="font-size:38px">⚠</div>
+      <strong>Transmisión no disponible</strong>
+      <div>${mensaje}</div>
+    </div>
+  `;
+
+}
+
+/* ==================================
+   INICIO AUTOMÁTICO
+================================== */
+
+document.addEventListener("DOMContentLoaded", cargarPartido);
+
+</script>
+
+</body>
+</html>
