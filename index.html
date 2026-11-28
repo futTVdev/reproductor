@@ -1,19 +1,20 @@
-
 <!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FutTV | Reproductor</title>
+<title>FutTV | En vivo</title>
 
 <style>
 :root{
   color-scheme:dark;
   --bg:#080d18;
   --panel:#111a2b;
+  --panel2:#0b1424;
   --line:#26344b;
   --muted:#9aa9bf;
   --accent:#38bdf8;
+  --green:#86efac;
 }
 
 *{
@@ -30,17 +31,16 @@ html,body{
 body{
   background:radial-gradient(circle at top,#14233b 0,#080d18 55%);
   color:#f8fafc;
-  font:16px/1.5 system-ui,Segoe UI,Arial,sans-serif;
+  font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif;
 }
 
 .wrap{
-  width:min(1250px,calc(100% - 32px));
-  height:100vh;
+  width:min(1500px,calc(100% - 28px));
   height:100dvh;
-  margin:0 auto;
+  margin:auto;
   display:flex;
   flex-direction:column;
-  padding:8px 0;
+  padding:10px 0;
   overflow:hidden;
 }
 
@@ -50,9 +50,8 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:16px;
-  margin-bottom:5px;
   flex-shrink:0;
+  margin-bottom:12px;
 }
 
 .logo{
@@ -68,43 +67,51 @@ header{
 .live{
   border:1px solid #14532d;
   background:#052e1a;
-  color:#86efac;
-  padding:4px 10px;
+  color:var(--green);
+  padding:4px 11px;
   border-radius:99px;
   font-size:11px;
   font-weight:800;
   letter-spacing:.08em;
 }
 
-/* DISTRIBUCIÓN PRINCIPAL */
+/* DISTRIBUCIÓN */
 
 .content{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:16px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 205px 205px;
+  gap:14px;
   flex:1;
   min-height:0;
   overflow:hidden;
 }
 
+/* PANELES */
+
+.player-panel,
+.donation-panel,
+.channels-panel{
+  background:rgba(17,26,43,.96);
+  border:1px solid var(--line);
+  border-radius:15px;
+  box-shadow:0 18px 50px #0004;
+  min-width:0;
+  min-height:0;
+}
+
 /* REPRODUCTOR */
 
 .player-panel{
-  flex:1;
-  min-width:0;
-  min-height:0;
-  background:rgba(17,26,43,.94);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:5px;
-  box-shadow:0 18px 50px #0005;
+  padding:9px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 .screen{
   width:100%;
   aspect-ratio:16/9;
-  max-height:calc(100dvh - 165px);
+  max-height:calc(100dvh - 175px);
   background:#000;
   border:1px solid #263247;
   border-radius:10px;
@@ -134,6 +141,26 @@ iframe{
   margin:8px 0;
 }
 
+.now-playing{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:9px 3px 2px;
+}
+
+.now-label{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+.now-name{
+  font-size:14px;
+  font-weight:800;
+}
+
 /* CONTADORES */
 
 .viewers{
@@ -146,11 +173,11 @@ iframe{
 .viewer-box{
   display:flex;
   align-items:center;
-  gap:10px;
-  background:#0b1424;
+  gap:9px;
+  background:var(--panel2);
   border:1px solid var(--line);
   border-radius:10px;
-  padding:7px 12px;
+  padding:7px 10px;
   min-width:0;
 }
 
@@ -187,23 +214,21 @@ iframe{
 /* DONACIONES */
 
 .donation-panel{
-  width:235px;
-  flex-shrink:0;
-  background:rgba(17,26,43,.96);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:20px 16px;
-  box-shadow:0 18px 50px #0005;
+  padding:18px 13px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   text-align:center;
 }
 
 .donation-icon{
-  font-size:34px;
-  margin-bottom:7px;
+  font-size:36px;
+  margin-bottom:9px;
 }
 
 .donation-panel h2{
-  font-size:18px;
+  font-size:17px;
   margin:0 0 9px;
 }
 
@@ -211,14 +236,14 @@ iframe{
   color:var(--muted);
   font-size:12px;
   line-height:1.6;
-  margin:0 0 16px;
+  margin:0 0 17px;
 }
 
 .donation-button{
   display:block;
   width:100%;
-  padding:11px 10px;
-  border-radius:10px;
+  padding:11px 8px;
+  border-radius:9px;
   background:var(--accent);
   color:#062033;
   text-decoration:none;
@@ -233,59 +258,158 @@ iframe{
 }
 
 .donation-footer{
-  margin-top:12px;
+  margin-top:13px;
   color:#718096;
   font-size:10px;
 }
 
+/* PANEL DE CANALES */
+
+.channels-panel{
+  display:flex;
+  flex-direction:column;
+  padding:12px 10px;
+  overflow:hidden;
+}
+
+.channels-heading{
+  flex-shrink:0;
+  padding:2px 3px 11px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:9px;
+}
+
+.channels-heading h2{
+  font-size:15px;
+  margin:0;
+}
+
+.channels-heading p{
+  color:var(--muted);
+  font-size:10px;
+  margin:3px 0 0;
+}
+
+/* ÚNICO PANEL CON DESPLAZAMIENTO */
+
+.channels-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  min-height:0;
+  padding-right:4px;
+  scrollbar-width:thin;
+  scrollbar-color:#40536f transparent;
+}
+
+.channels-list::-webkit-scrollbar{
+  width:5px;
+}
+
+.channels-list::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.channels-list::-webkit-scrollbar-thumb{
+  background:#40536f;
+  border-radius:10px;
+}
+
+.channel-button{
+  width:100%;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-align:left;
+  padding:10px 9px;
+  border:1px solid #26344b;
+  border-radius:9px;
+  background:#0b1424;
+  color:#e2e8f0;
+  cursor:pointer;
+  transition:.18s;
+  font:inherit;
+}
+
+.channel-button:hover{
+  background:#17263d;
+  border-color:#42617e;
+}
+
+.channel-button.active{
+  background:#102a40;
+  border-color:var(--accent);
+  box-shadow:inset 3px 0 var(--accent);
+}
+
+.channel-icon{
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+  display:grid;
+  place-items:center;
+  background:#1b2a40;
+  border-radius:7px;
+  font-size:15px;
+}
+
+.channel-info{
+  min-width:0;
+}
+
+.channel-name{
+  display:block;
+  font-size:12px;
+  font-weight:800;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.channel-description{
+  display:block;
+  color:#8192aa;
+  font-size:9px;
+}
+
+.channel-active{
+  color:var(--accent);
+}
+
 /* TABLET */
 
-@media(max-width:800px){
-
-  .wrap{
-    width:calc(100% - 20px);
-  }
+@media(max-width:1000px){
 
   .content{
-    gap:10px;
+    grid-template-columns:minmax(0,1fr) 170px 175px;
+    gap:9px;
   }
 
   .donation-panel{
-    width:175px;
-    padding:14px 10px;
+    padding:12px 9px;
   }
 
-  .donation-icon{
-    font-size:27px;
+  .channels-panel{
+    padding:10px 7px;
   }
 
-  .donation-panel h2{
-    font-size:15px;
+  .channel-button{
+    padding:8px 6px;
+    gap:7px;
   }
 
-  .donation-panel p{
-    font-size:11px;
-    margin-bottom:12px;
-  }
-
-  .donation-button{
-    font-size:12px;
-    padding:9px 5px;
-  }
-
-  .viewer-box{
-    padding:6px;
-    gap:6px;
-  }
-
-  .viewer-number{
-    font-size:17px;
+  .channel-icon{
+    width:26px;
+    height:26px;
   }
 }
 
 /* CELULARES */
 
-@media(max-width:520px){
+@media(max-width:650px){
 
   .wrap{
     width:calc(100% - 14px);
@@ -293,7 +417,7 @@ iframe{
   }
 
   header{
-    margin-bottom:6px;
+    margin-bottom:7px;
   }
 
   .logo{
@@ -301,35 +425,38 @@ iframe{
   }
 
   .content{
-    flex-direction:column;
-    justify-content:center;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto minmax(0,1fr);
     gap:7px;
   }
 
   .player-panel{
-    width:100%;
-    flex:none;
+    grid-column:1 / -1;
     padding:6px;
   }
 
   .screen{
     width:100%;
-    max-height:42dvh;
-    aspect-ratio:16/9;
+    max-height:36dvh;
+  }
+
+  .now-playing{
+    padding:5px 2px 0;
   }
 
   .viewers{
-    margin-top:6px;
+    margin-top:5px;
     gap:5px;
   }
 
   .viewer-box{
-    padding:5px 7px;
-    gap:6px;
+    padding:5px 6px;
+    gap:5px;
   }
 
   .viewer-icon{
-    font-size:17px;
+    font-size:16px;
   }
 
   .viewer-label{
@@ -345,14 +472,9 @@ iframe{
   }
 
   .donation-panel{
-    width:100%;
-    flex:none;
-    padding:8px 10px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    text-align:left;
+    grid-column:1;
+    padding:9px 7px;
+    min-height:0;
   }
 
   .donation-icon{
@@ -361,36 +483,66 @@ iframe{
 
   .donation-panel h2{
     font-size:13px;
-    margin:0;
+    margin-bottom:4px;
   }
 
   .donation-panel p{
-    display:none;
+    font-size:10px;
+    line-height:1.35;
+    margin-bottom:7px;
+  }
+
+  .donation-button{
+    padding:8px 5px;
+    font-size:11px;
   }
 
   .donation-footer{
     display:none;
   }
 
-  .donation-button{
-    width:auto;
-    padding:8px 14px;
-    font-size:11px;
-    white-space:nowrap;
-    margin:0;
+  .channels-panel{
+    grid-column:2;
+    grid-row:2 / 4;
+    padding:8px 7px;
+  }
+
+  .channels-heading{
+    padding-bottom:7px;
+    margin-bottom:6px;
+  }
+
+  .channels-heading h2{
+    font-size:13px;
+  }
+
+  .channels-heading p{
+    font-size:9px;
+  }
+
+  .channel-button{
+    padding:8px 5px;
+  }
+
+  .channel-name{
+    font-size:10px;
+  }
+
+  .channel-description{
+    font-size:8px;
   }
 }
 
-/* PANTALLAS MUY BAJAS */
+/* PANTALLAS BAJAS */
 
-@media(max-height:500px) and (min-width:521px){
+@media(max-height:550px) and (min-width:651px){
 
   .wrap{
     padding:4px 0;
   }
 
   header{
-    margin-bottom:4px;
+    margin-bottom:5px;
   }
 
   .logo{
@@ -398,11 +550,11 @@ iframe{
   }
 
   .player-panel{
-    padding:6px;
+    padding:5px;
   }
 
   .screen{
-    max-height:calc(100dvh - 115px);
+    max-height:calc(100dvh - 125px);
   }
 
   .viewers{
@@ -411,7 +563,7 @@ iframe{
   }
 
   .viewer-box{
-    padding:4px 8px;
+    padding:4px 7px;
   }
 
   .viewer-number{
@@ -419,11 +571,11 @@ iframe{
   }
 
   .donation-panel{
-    padding:12px 10px;
+    padding:8px;
   }
 
   .donation-icon{
-    font-size:24px;
+    font-size:25px;
     margin-bottom:3px;
   }
 
@@ -434,14 +586,13 @@ iframe{
 
   .donation-panel p{
     font-size:10px;
-    margin-bottom:8px;
+    margin-bottom:7px;
   }
 
-  .donation-footer{
-    margin-top:6px;
+  .channels-panel{
+    padding:7px;
   }
 }
-
 </style>
 </head>
 
@@ -456,18 +607,24 @@ iframe{
 
 <div class="content">
 
-  <!-- REPRODUCTOR -->
+  <!-- REPRODUCTOR PRINCIPAL -->
 
   <section class="player-panel">
 
     <div class="screen" id="screen">
-
       <div class="placeholder">
         <div style="font-size:38px">▶</div>
-        <strong>Cargando transmisión...</strong>
-        <div>Preparando reproductor FutTV.</div>
+        <strong>Preparando transmisión...</strong>
+        <div>Bienvenido a FutTV.</div>
       </div>
+    </div>
 
+    <div class="now-playing">
+      <div>
+        <span class="now-label">REPRODUCIENDO AHORA</span>
+        <div class="now-name" id="currentChannelName">TUDN</div>
+      </div>
+      <span class="live">EN VIVO</span>
     </div>
 
     <!-- CONTADORES -->
@@ -477,7 +634,7 @@ iframe{
       <div class="viewer-box">
         <div class="viewer-icon">👁</div>
         <div class="viewer-info">
-          <span class="viewer-label">ESTE PARTIDO</span>
+          <span class="viewer-label">ESTE CANAL</span>
           <span class="viewer-number" id="matchViewers">—</span>
           <span class="viewer-status" id="matchStatus">Conectando...</span>
         </div>
@@ -502,15 +659,13 @@ iframe{
 
     <div class="donation-icon">💙</div>
 
-    <div>
-      <h2>Apoya a FutTV</h2>
+    <h2>Apoya a FutTV</h2>
 
-      <p>
-        Tu apoyo nos ayuda a seguir creciendo
-        y mejorando nuestra plataforma.
-        ¡Cada donación cuenta!
-      </p>
-    </div>
+    <p>
+      Tu apoyo nos ayuda a seguir creciendo
+      y mejorando nuestra plataforma.
+      ¡Cada donación cuenta!
+    </p>
 
     <a
       href="https://paypal.me/OficialFutTV"
@@ -528,6 +683,21 @@ iframe{
 
   </aside>
 
+  <!-- PANEL DE CANALES -->
+
+  <aside class="channels-panel">
+
+    <div class="channels-heading">
+      <h2>📺 Canales</h2>
+      <p>Selecciona una transmisión</p>
+    </div>
+
+    <div class="channels-list" id="channelsList">
+      <!-- Los canales se generan con JavaScript -->
+    </div>
+
+  </aside>
+
 </div>
 
 </main>
@@ -539,28 +709,58 @@ iframe{
 <script>
 
 /* ==================================
-   CONFIGURACIÓN DEL PARTIDO ACTUAL
+   CONFIGURACIÓN DE CANALES
 ================================== */
 
-const PARTIDO_ACTUAL = {
+/*
+  Aquí puedes agregar, quitar o modificar canales.
 
-  // nombre: "ESPN 2",
-  // id: "espn2",
-  // enlace: "https://tvf90.com/1.php?stream=espn2"
+  El campo id debe ser único.
+  El campo enlace contiene la dirección de la transmisión.
 
-  nombre: "TUDN",
-  id: "tudn",
-  enlace: "https://tvf90.com/3.php?stream=tudn",
+  CANAL_PRINCIPAL determina cuál aparece
+  automáticamente al entrar a FutTV.
+*/
 
-  // nombre: "ESPN",
-  // id: "espn",
-  // enlace: "https://tvf90.com/canal.php?stream=espn",
+const CANALES = [
 
-  // nombre: "FOX SPORTS 2 USA",
-  // id: "foxsports2",
-  // enlace: "https://tvf90.com/1.php?stream=foxsports2_usa",
+  {
+    nombre: "TUDN",
+    id: "tudn",
+    icono: "⚽",
+    descripcion: "Fútbol en vivo",
+    enlace: "https://tvf90.com/3.php?stream=tudn"
+  },
 
-};
+  {
+    nombre: "ESPN 2",
+    id: "espn2",
+    icono: "📺",
+    descripcion: "Deportes",
+    enlace: "https://tvf90.com/1.php?stream=espn2"
+  },
+
+  {
+    nombre: "ESPN",
+    id: "espn",
+    icono: "📺",
+    descripcion: "Deportes",
+    enlace: "https://tvf90.com/canal.php?stream=espn"
+  },
+
+  {
+    nombre: "FOX SPORTS 2 USA",
+    id: "foxsports2",
+    icono: "🏆",
+    descripcion: "Deportes",
+    enlace: "https://tvf90.com/1.php?stream=foxsports2_usa"
+  }
+
+];
+
+/* CANAL PRINCIPAL AL ENTRAR */
+
+const CANAL_PRINCIPAL = "tudn";
 
 /* ==================================
    CONFIGURACIÓN SUPABASE
@@ -587,19 +787,53 @@ const VISITOR_ID =
     : Date.now() + "-" + Math.random().toString(36).slice(2);
 
 /* ==================================
-   MOTOR DEL REPRODUCTOR
+   ESTADO DE FUTTV
+================================== */
+
+let canalActual = null;
+let globalChannel = null;
+let matchChannel = null;
+
+/* ==================================
+   ELEMENTOS
 ================================== */
 
 const screen = document.getElementById("screen");
+const channelsList = document.getElementById("channelsList");
 
-function cargarPartido(){
+/* ==================================
+   REPRODUCTOR
+================================== */
+
+function mostrarError(mensaje){
+
+  const placeholder = document.createElement("div");
+  placeholder.className = "placeholder";
+
+  const icon = document.createElement("div");
+  icon.style.fontSize = "38px";
+  icon.textContent = "⚠";
+
+  const title = document.createElement("strong");
+  title.textContent = "Transmisión no disponible";
+
+  const description = document.createElement("div");
+  description.textContent = mensaje;
+
+  placeholder.append(icon, title, description);
+
+  screen.replaceChildren(placeholder);
+
+}
+
+function cargarCanal(canal){
 
   let url;
 
-  try {
-    url = new URL(PARTIDO_ACTUAL.enlace);
-  } catch {
-    mostrarError("El enlace del partido no está configurado correctamente.");
+  try{
+    url = new URL(canal.enlace);
+  }catch{
+    mostrarError("El enlace del canal no es válido.");
     return;
   }
 
@@ -611,7 +845,7 @@ function cargarPartido(){
   const frame = document.createElement("iframe");
 
   frame.src = url.href;
-  frame.title = "Reproductor FutTV";
+  frame.title = "FutTV - " + canal.nombre;
   frame.allow = "autoplay; fullscreen; picture-in-picture";
   frame.allowFullscreen = true;
   frame.referrerPolicy = "strict-origin-when-cross-origin";
@@ -620,26 +854,99 @@ function cargarPartido(){
 
 }
 
-function mostrarError(mensaje){
+/* ==================================
+   GENERAR PANEL DE CANALES
+================================== */
 
-  screen.innerHTML = `
-    <div class="placeholder">
-      <div style="font-size:38px">⚠</div>
-      <strong>Transmisión no disponible</strong>
-      <div>${mensaje}</div>
-    </div>
-  `;
+function generarCanales(){
+
+  channelsList.replaceChildren();
+
+  CANALES.forEach(canal => {
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "channel-button";
+    button.dataset.id = canal.id;
+
+    const icon = document.createElement("span");
+    icon.className = "channel-icon";
+    icon.textContent = canal.icono || "📺";
+
+    const info = document.createElement("span");
+    info.className = "channel-info";
+
+    const name = document.createElement("span");
+    name.className = "channel-name";
+    name.textContent = canal.nombre;
+
+    const description = document.createElement("span");
+    description.className = "channel-description";
+    description.textContent = canal.descripcion || "Transmisión disponible";
+
+    info.append(name, description);
+    button.append(icon, info);
+
+    button.addEventListener("click", () => {
+      seleccionarCanal(canal.id);
+    });
+
+    channelsList.appendChild(button);
+
+  });
 
 }
 
 /* ==================================
-   SISTEMA DE ESPECTADORES
+   SELECCIONAR CANAL
+================================== */
+
+function actualizarCanalActivo(){
+
+  document.querySelectorAll(".channel-button").forEach(button => {
+
+    const activo = button.dataset.id === canalActual.id;
+
+    button.classList.toggle("active", activo);
+
+    const name = button.querySelector(".channel-name");
+
+    if(name){
+      name.classList.toggle("channel-active", activo);
+    }
+
+  });
+
+}
+
+function seleccionarCanal(id){
+
+  const canal = CANALES.find(item => item.id === id);
+
+  if(!canal){
+    return;
+  }
+
+  canalActual = canal;
+
+  document.getElementById("currentChannelName").textContent =
+    canal.nombre;
+
+  actualizarCanalActivo();
+
+  cargarCanal(canal);
+
+  reiniciarContadorPartido();
+
+}
+
+/* ==================================
+   CONTADORES DE ESPECTADORES
 ================================== */
 
 function contarEspectadores(channel, elemento, estado){
 
   const presence = channel.presenceState();
-
   const total = Object.keys(presence).length;
 
   document.getElementById(elemento).textContent =
@@ -650,7 +957,11 @@ function contarEspectadores(channel, elemento, estado){
 
 }
 
-function conectarSala(nombreSala, elemento, estado){
+/* ==================================
+   CONECTAR SALA DE SUPABASE
+================================== */
+
+function conectarSala(nombreSala, elemento, estado, partidoId){
 
   const channel = supabaseClient.channel(nombreSala, {
     config: {
@@ -668,21 +979,21 @@ function conectarSala(nombreSala, elemento, estado){
     }
   );
 
-  channel.subscribe(async (status) => {
+  channel.subscribe(async status => {
 
     if(status === "SUBSCRIBED"){
 
-      try {
+      try{
 
         await channel.track({
           visitante: VISITOR_ID,
-          partido: PARTIDO_ACTUAL.id,
+          partido: partidoId || null,
           conectado: new Date().toISOString()
         });
 
         contarEspectadores(channel, elemento, estado);
 
-      } catch(error){
+      }catch(error){
 
         console.error("Error registrando visitante:", error);
 
@@ -712,14 +1023,79 @@ function conectarSala(nombreSala, elemento, estado){
 }
 
 /* ==================================
-   INICIAR CONTADORES
+   CONTADOR GLOBAL
 ================================== */
 
-function iniciarEspectadores(){
+function iniciarContadorGlobal(){
 
-  if(!window.supabase){
+  globalChannel = conectarSala(
+    "futtv-global",
+    "globalViewers",
+    "globalStatus",
+    null
+  );
 
-    console.error("No se pudo cargar Supabase.");
+}
+
+/* ==================================
+   CONTADOR DEL CANAL ACTUAL
+================================== */
+
+async function reiniciarContadorPartido(){
+
+  const matchNumber = document.getElementById("matchViewers");
+  const matchStatus = document.getElementById("matchStatus");
+
+  matchNumber.textContent = "—";
+  matchStatus.textContent = "Conectando...";
+
+  if(matchChannel){
+
+    const canalAnterior = matchChannel;
+    matchChannel = null;
+
+    await supabaseClient.removeChannel(canalAnterior);
+
+  }
+
+  if(!canalActual){
+    return;
+  }
+
+  const canalId = canalActual.id;
+
+  matchChannel = conectarSala(
+    "futtv-match-" + canalId,
+    "matchViewers",
+    "matchStatus",
+    canalId
+  );
+
+}
+
+/* ==================================
+   INICIAR FUTTV
+================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  generarCanales();
+
+  const canalInicial = CANALES.find(
+    canal => canal.id === CANAL_PRINCIPAL
+  );
+
+  if(canalInicial){
+    seleccionarCanal(canalInicial.id);
+  }else{
+    mostrarError("No se encontró el canal principal configurado.");
+  }
+
+  if(window.supabase){
+
+    iniciarContadorGlobal();
+
+  }else{
 
     document.getElementById("matchStatus").textContent =
       "Error de conexión";
@@ -727,33 +1103,9 @@ function iniciarEspectadores(){
     document.getElementById("globalStatus").textContent =
       "Error de conexión";
 
-    return;
+    console.error("No se pudo cargar Supabase.");
 
   }
-
-  conectarSala(
-    "futtv-global",
-    "globalViewers",
-    "globalStatus"
-  );
-
-  conectarSala(
-    "futtv-match-" + PARTIDO_ACTUAL.id,
-    "matchViewers",
-    "matchStatus"
-  );
-
-}
-
-/* ==================================
-   INICIO AUTOMÁTICO
-================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  cargarPartido();
-
-  iniciarEspectadores();
 
 });
 
