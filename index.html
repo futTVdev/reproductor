@@ -3,23 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FutTV | En vivo</title>
+<title>FutTV | EN VIVO</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
 
 <style>
 :root{
   color-scheme:dark;
-  --bg:#080d18;
-  --panel:#111a2b;
-  --panel2:#0b1424;
-  --line:#26344b;
-  --muted:#9aa9bf;
-  --accent:#38bdf8;
-  --green:#86efac;
+  --bg:#0b0e13;
+  --panel:#12161d;
+  --panel2:#171c25;
+  --line:#252c38;
+  --line-strong:#384254;
+  --text:#eef1f6;
+  --muted:#8c96a8;
+  --accent:#2f6fed;
+  --accent-hover:#4782f5;
+  --live:#ef4444;
+  --radius:8px;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 html,body{
   margin:0;
@@ -29,18 +35,19 @@ html,body{
 }
 
 body{
-  background:radial-gradient(circle at top,#14233b 0,#080d18 55%);
-  color:#f8fafc;
-  font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font:15px/1.5 Inter,system-ui,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
 
 .wrap{
-  width:min(1500px,calc(100% - 28px));
+  width:min(1500px,calc(100% - 32px));
   height:100dvh;
   margin:auto;
   display:flex;
   flex-direction:column;
-  padding:10px 0;
+  padding-bottom:14px;
   overflow:hidden;
 }
 
@@ -51,50 +58,65 @@ header{
   align-items:center;
   justify-content:space-between;
   flex-shrink:0;
-  margin-bottom:12px;
+  height:58px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:14px;
 }
 
 .logo{
-  font-size:27px;
-  font-weight:900;
-  letter-spacing:-1.5px;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
-.logo span{
-  color:var(--accent);
+.logo span{ color:var(--accent-hover); }
+
+/* INDICADOR EN VIVO */
+
+.live,
+.channel-description{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.1em;
+}
+
+.live::before,
+.channel-description::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--live);
 }
 
 .live{
-  border:1px solid #14532d;
-  background:#052e1a;
-  color:var(--green);
-  padding:4px 11px;
-  border-radius:99px;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.08em;
+  border:1px solid var(--line);
+  background:var(--panel);
+  color:var(--text);
+  padding:5px 11px;
+  border-radius:6px;
 }
 
 /* DISTRIBUCIÓN */
 
 .content{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 205px 205px;
+  grid-template-columns:minmax(0,1fr) 320px;
   gap:14px;
   flex:1;
   min-height:0;
   overflow:hidden;
 }
 
-/* PANELES */
-
 .player-panel,
-.donation-panel,
-.channels-panel{
-  background:rgba(17,26,43,.96);
+.side-panel{
+  background:var(--panel);
   border:1px solid var(--line);
-  border-radius:15px;
-  box-shadow:0 18px 50px #0004;
+  border-radius:12px;
   min-width:0;
   min-height:0;
 }
@@ -102,7 +124,7 @@ header{
 /* REPRODUCTOR */
 
 .player-panel{
-  padding:9px;
+  padding:10px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -111,10 +133,9 @@ header{
 .screen{
   width:100%;
   aspect-ratio:16/9;
-  max-height:calc(100dvh - 175px);
+  max-height:calc(100dvh - 235px);
   background:#000;
-  border:1px solid #263247;
-  border-radius:10px;
+  border-radius:var(--radius);
   overflow:hidden;
   display:grid;
   place-items:center;
@@ -130,15 +151,16 @@ iframe{
 
 .placeholder{
   text-align:center;
-  color:#aab7c9;
+  color:var(--muted);
   padding:20px;
 }
 
 .placeholder strong{
   display:block;
-  color:#fff;
-  font-size:18px;
-  margin:8px 0;
+  color:var(--text);
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:6px;
 }
 
 .now-playing{
@@ -146,19 +168,21 @@ iframe{
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  padding:9px 3px 2px;
+  padding:11px 4px 0;
 }
 
 .now-label{
+  display:block;
   color:var(--muted);
   font-size:10px;
-  font-weight:800;
-  letter-spacing:.08em;
+  font-weight:600;
+  letter-spacing:.12em;
 }
 
 .now-name{
-  font-size:14px;
-  font-weight:800;
+  font-size:18px;
+  font-weight:700;
+  line-height:1.35;
 }
 
 /* CONTADORES */
@@ -167,431 +191,219 @@ iframe{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  margin-top:9px;
+  margin-top:10px;
 }
 
 .viewer-box{
-  display:flex;
-  align-items:center;
-  gap:9px;
   background:var(--panel2);
   border:1px solid var(--line);
-  border-radius:10px;
-  padding:7px 10px;
+  border-radius:var(--radius);
+  padding:8px 12px;
   min-width:0;
-}
-
-.viewer-icon{
-  font-size:21px;
-  color:var(--accent);
 }
 
 .viewer-info{
-  min-width:0;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  column-gap:10px;
 }
 
 .viewer-label{
-  display:block;
   color:var(--muted);
-  font-size:9px;
-  font-weight:800;
-  letter-spacing:.06em;
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.1em;
 }
 
 .viewer-number{
-  display:block;
-  font-size:19px;
-  font-weight:900;
-  line-height:1.3;
+  grid-column:2;
+  grid-row:1 / 3;
+  font-size:22px;
+  font-weight:700;
   font-variant-numeric:tabular-nums;
 }
 
 .viewer-status{
-  color:#64748b;
-  font-size:9px;
-}
-
-/* DONACIONES */
-
-.donation-panel{
-  padding:18px 13px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-.donation-icon{
-  font-size:36px;
-  margin-bottom:9px;
-}
-
-.donation-panel h2{
-  font-size:17px;
-  margin:0 0 9px;
-}
-
-.donation-panel p{
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.6;
-  margin:0 0 17px;
-}
-
-.donation-button{
-  display:block;
-  width:100%;
-  padding:11px 8px;
-  border-radius:9px;
-  background:var(--accent);
-  color:#062033;
-  text-decoration:none;
-  font-weight:800;
-  font-size:13px;
-  transition:.2s;
-}
-
-.donation-button:hover{
-  background:#7dd3fc;
-  transform:translateY(-2px);
-}
-
-.donation-footer{
-  margin-top:13px;
-  color:#718096;
+  grid-column:1;
+  color:#677287;
   font-size:10px;
 }
 
 /* PANEL DE CANALES */
 
-.channels-panel{
+.side-panel{
   display:flex;
   flex-direction:column;
-  padding:12px 10px;
+  padding:14px 12px 12px;
   overflow:hidden;
 }
 
 .channels-heading{
   flex-shrink:0;
-  padding:2px 3px 11px;
+  padding:0 2px 12px;
   border-bottom:1px solid var(--line);
-  margin-bottom:9px;
+  margin-bottom:12px;
 }
 
 .channels-heading h2{
   font-size:15px;
+  font-weight:700;
   margin:0;
 }
 
 .channels-heading p{
   color:var(--muted);
-  font-size:10px;
-  margin:3px 0 0;
+  font-size:11px;
+  margin:2px 0 0;
 }
 
-/* ÚNICO PANEL CON DESPLAZAMIENTO */
-
 .channels-list{
-  display:flex;
-  flex-direction:column;
-  gap:7px;
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:max-content;
+  align-content:start;
+  gap:8px;
   overflow-y:auto;
   overflow-x:hidden;
   min-height:0;
   padding-right:4px;
   scrollbar-width:thin;
-  scrollbar-color:#40536f transparent;
-}
-
-.channels-list::-webkit-scrollbar{
-  width:5px;
-}
-
-.channels-list::-webkit-scrollbar-track{
-  background:transparent;
-}
-
-.channels-list::-webkit-scrollbar-thumb{
-  background:#40536f;
-  border-radius:10px;
+  scrollbar-color:var(--line-strong) transparent;
 }
 
 .channel-button{
   width:100%;
-  flex-shrink:0;
+  min-height:88px;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  gap:10px;
-  text-align:left;
-  padding:10px 9px;
-  border:1px solid #26344b;
-  border-radius:9px;
-  background:#0b1424;
-  color:#e2e8f0;
+  justify-content:center;
+  gap:7px;
+  text-align:center;
+  padding:12px 8px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--panel2);
+  color:var(--text);
   cursor:pointer;
-  transition:.18s;
+  transition:background .15s,border-color .15s;
   font:inherit;
 }
 
 .channel-button:hover{
-  background:#17263d;
-  border-color:#42617e;
+  background:#1d2430;
+  border-color:var(--line-strong);
 }
 
 .channel-button.active{
-  background:#102a40;
+  background:#16264a;
   border-color:var(--accent);
-  box-shadow:inset 3px 0 var(--accent);
+  box-shadow:inset 0 0 0 1px var(--accent);
 }
 
-.channel-icon{
-  width:30px;
-  height:30px;
-  flex-shrink:0;
-  display:grid;
-  place-items:center;
-  background:#1b2a40;
-  border-radius:7px;
-  font-size:15px;
-}
-
-.channel-info{
-  min-width:0;
+.channel-button:focus-visible,
+.donation-button:focus-visible{
+  outline:2px solid var(--accent-hover);
+  outline-offset:-4px;
 }
 
 .channel-name{
   display:block;
-  font-size:12px;
-  font-weight:800;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  font-size:16px;
+  font-weight:700;
+  line-height:1.25;
 }
 
-.channel-description{
+.channel-button.active .channel-description{ color:var(--text); }
+
+/* BOTÓN DE DONAR */
+
+.donation-button{
   display:block;
-  color:#8192aa;
-  font-size:9px;
+  flex-shrink:0;
+  margin-top:12px;
+  padding:12px 8px;
+  border-radius:var(--radius);
+  background:var(--accent);
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  transition:background .15s;
 }
 
-.channel-active{
-  color:var(--accent);
-}
+.donation-button:hover{ background:var(--accent-hover); }
 
 /* TABLET */
 
 @media(max-width:1000px){
-
   .content{
-    grid-template-columns:minmax(0,1fr) 170px 175px;
-    gap:9px;
+    grid-template-columns:minmax(0,1fr) 260px;
+    gap:10px;
   }
-
-  .donation-panel{
-    padding:12px 9px;
-  }
-
-  .channels-panel{
-    padding:10px 7px;
-  }
-
-  .channel-button{
-    padding:8px 6px;
-    gap:7px;
-  }
-
-  .channel-icon{
-    width:26px;
-    height:26px;
-  }
+  .side-panel{ padding:10px 8px; }
+  .channel-name{ font-size:14px; }
 }
 
 /* CELULARES */
 
 @media(max-width:650px){
-
-  .wrap{
-    width:calc(100% - 14px);
-    padding:5px 0;
-  }
-
-  header{
-    margin-bottom:7px;
-  }
-
-  .logo{
-    font-size:23px;
-  }
+  .wrap{ width:calc(100% - 14px); padding-bottom:7px; }
+  header{ height:46px; margin-bottom:7px; }
+  .logo{ font-size:20px; }
 
   .content{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:auto auto minmax(0,1fr);
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto minmax(0,1fr);
     gap:7px;
   }
 
-  .player-panel{
-    grid-column:1 / -1;
-    padding:6px;
-  }
+  .player-panel{ padding:6px; }
+  .screen{ max-height:34dvh; }
+  .now-playing{ padding:6px 2px 0; }
+  .now-name{ font-size:15px; }
+  .viewers{ margin-top:6px; gap:6px; }
+  .viewer-box{ padding:5px 8px; }
+  .viewer-label{ font-size:8px; }
+  .viewer-number{ font-size:17px; }
+  .viewer-status{ font-size:8px; }
 
-  .screen{
-    width:100%;
-    max-height:36dvh;
-  }
+  .side-panel{ padding:8px 7px; }
+  .channels-heading{ padding-bottom:6px; margin-bottom:7px; }
+  .channels-heading h2{ font-size:13px; }
+  .channels-heading p{ display:none; }
 
-  .now-playing{
-    padding:5px 2px 0;
-  }
+  .channels-list{ gap:6px; }
+  .channel-button{ min-height:60px; padding:7px 5px; gap:3px; }
+  .channel-name{ font-size:14px; }
+  .channel-description{ font-size:9px; }
 
-  .viewers{
-    margin-top:5px;
-    gap:5px;
-  }
-
-  .viewer-box{
-    padding:5px 6px;
-    gap:5px;
-  }
-
-  .viewer-icon{
-    font-size:16px;
-  }
-
-  .viewer-label{
-    font-size:8px;
-  }
-
-  .viewer-number{
-    font-size:16px;
-  }
-
-  .viewer-status{
-    font-size:8px;
-  }
-
-  .donation-panel{
-    grid-column:1;
-    padding:9px 7px;
-    min-height:0;
-  }
-
-  .donation-icon{
-    display:none;
-  }
-
-  .donation-panel h2{
-    font-size:13px;
-    margin-bottom:4px;
-  }
-
-  .donation-panel p{
-    font-size:10px;
-    line-height:1.35;
-    margin-bottom:7px;
-  }
-
-  .donation-button{
-    padding:8px 5px;
-    font-size:11px;
-  }
-
-  .donation-footer{
-    display:none;
-  }
-
-  .channels-panel{
-    grid-column:2;
-    grid-row:2 / 4;
-    padding:8px 7px;
-  }
-
-  .channels-heading{
-    padding-bottom:7px;
-    margin-bottom:6px;
-  }
-
-  .channels-heading h2{
-    font-size:13px;
-  }
-
-  .channels-heading p{
-    font-size:9px;
-  }
-
-  .channel-button{
-    padding:8px 5px;
-  }
-
-  .channel-name{
-    font-size:10px;
-  }
-
-  .channel-description{
-    font-size:8px;
-  }
+  .donation-button{ margin-top:7px; padding:9px 5px; font-size:13px; }
 }
 
 /* PANTALLAS BAJAS */
 
 @media(max-height:550px) and (min-width:651px){
+  .wrap{ padding-bottom:5px; }
+  header{ height:40px; margin-bottom:6px; }
+  .logo{ font-size:19px; }
+  .player-panel{ padding:5px; }
+  .screen{ max-height:calc(100dvh - 165px); }
+  .now-playing{ padding-top:5px; }
+  .now-label{ display:none; }
+  .viewers{ margin-top:5px; gap:5px; }
+  .viewer-box{ padding:3px 8px; }
+  .viewer-number{ font-size:16px; }
 
-  .wrap{
-    padding:4px 0;
-  }
-
-  header{
-    margin-bottom:5px;
-  }
-
-  .logo{
-    font-size:21px;
-  }
-
-  .player-panel{
-    padding:5px;
-  }
-
-  .screen{
-    max-height:calc(100dvh - 125px);
-  }
-
-  .viewers{
-    margin-top:5px;
-    gap:5px;
-  }
-
-  .viewer-box{
-    padding:4px 7px;
-  }
-
-  .viewer-number{
-    font-size:15px;
-  }
-
-  .donation-panel{
-    padding:8px;
-  }
-
-  .donation-icon{
-    font-size:25px;
-    margin-bottom:3px;
-  }
-
-  .donation-panel h2{
-    font-size:14px;
-    margin-bottom:5px;
-  }
-
-  .donation-panel p{
-    font-size:10px;
-    margin-bottom:7px;
-  }
-
-  .channels-panel{
-    padding:7px;
-  }
+  .side-panel{ padding:7px; }
+  .channels-heading{ padding-bottom:5px; margin-bottom:6px; }
+  .channels-heading p{ display:none; }
+  .channel-button{ min-height:56px; padding:6px 4px; gap:2px; }
+  .channel-name{ font-size:13px; }
+  .donation-button{ margin-top:6px; padding:7px; }
 }
 </style>
 </head>
@@ -613,7 +425,6 @@ iframe{
 
     <div class="screen" id="screen">
       <div class="placeholder">
-        <div style="font-size:38px">▶</div>
         <strong>Preparando transmisión...</strong>
         <div>Bienvenido a FutTV.</div>
       </div>
@@ -632,7 +443,6 @@ iframe{
     <div class="viewers">
 
       <div class="viewer-box">
-        <div class="viewer-icon">👁</div>
         <div class="viewer-info">
           <span class="viewer-label">ESTE CANAL</span>
           <span class="viewer-number" id="matchViewers">—</span>
@@ -641,7 +451,6 @@ iframe{
       </div>
 
       <div class="viewer-box">
-        <div class="viewer-icon">👥</div>
         <div class="viewer-info">
           <span class="viewer-label">TOTAL FUTTV</span>
           <span class="viewer-number" id="globalViewers">—</span>
@@ -653,19 +462,17 @@ iframe{
 
   </section>
 
-  <!-- DONACIONES -->
+  <!-- CANALES Y DONACIÓN -->
 
-  <aside class="donation-panel">
+  <aside class="side-panel">
 
-    <div class="donation-icon">💙</div>
+    <div class="channels-heading">
+      <h2>Canales</h2>
+    </div>
 
-    <h2>Apoya a FutTV</h2>
-
-    <p>
-      Tu apoyo nos ayuda a seguir creciendo
-      y mejorando nuestra plataforma.
-      ¡Cada donación cuenta!
-    </p>
+    <div class="channels-list" id="channelsList">
+      <!-- Los canales se generan con JavaScript -->
+    </div>
 
     <a
       href="https://paypal.me/OficialFutTV"
@@ -673,28 +480,8 @@ iframe{
       rel="noopener noreferrer"
       class="donation-button"
     >
-      ♥ Donar ahora
+      Donar ahora
     </a>
-
-    <div class="donation-footer">
-      Gracias por apoyar a FutTV<br>
-      Disfruta el partido
-    </div>
-
-  </aside>
-
-  <!-- PANEL DE CANALES -->
-
-  <aside class="channels-panel">
-
-    <div class="channels-heading">
-      <h2>📺 Canales</h2>
-      <p>Selecciona una transmisión</p>
-    </div>
-
-    <div class="channels-list" id="channelsList">
-      <!-- Los canales se generan con JavaScript -->
-    </div>
 
   </aside>
 
@@ -727,32 +514,24 @@ const CANALES = [
   {
     nombre: "TUDN",
     id: "tudn",
-    icono: "⚽",
-    descripcion: "Fútbol en vivo",
     enlace: "https://tvf90.com/3.php?stream=tudn"
-  },
-
-  {
-    nombre: "ESPN 2",
-    id: "espn2",
-    icono: "📺",
-    descripcion: "Deportes",
-    enlace: "https://tvf90.com/1.php?stream=espn2"
   },
 
   {
     nombre: "ESPN",
     id: "espn",
-    icono: "📺",
-    descripcion: "Deportes",
     enlace: "https://tvf90.com/canal.php?stream=espn"
+  },
+
+  {
+    nombre: "ESPN 2",
+    id: "espn2",
+    enlace: "https://tvf90.com/1.php?stream=espn2"
   },
 
   {
     nombre: "FOX SPORTS 2 USA",
     id: "foxsports2",
-    icono: "🏆",
-    descripcion: "Deportes",
     enlace: "https://tvf90.com/1.php?stream=foxsports2_usa"
   }
 
@@ -810,17 +589,13 @@ function mostrarError(mensaje){
   const placeholder = document.createElement("div");
   placeholder.className = "placeholder";
 
-  const icon = document.createElement("div");
-  icon.style.fontSize = "38px";
-  icon.textContent = "⚠";
-
   const title = document.createElement("strong");
   title.textContent = "Transmisión no disponible";
 
   const description = document.createElement("div");
   description.textContent = mensaje;
 
-  placeholder.append(icon, title, description);
+  placeholder.append(title, description);
 
   screen.replaceChildren(placeholder);
 
@@ -869,10 +644,6 @@ function generarCanales(){
     button.className = "channel-button";
     button.dataset.id = canal.id;
 
-    const icon = document.createElement("span");
-    icon.className = "channel-icon";
-    icon.textContent = canal.icono || "📺";
-
     const info = document.createElement("span");
     info.className = "channel-info";
 
@@ -882,10 +653,10 @@ function generarCanales(){
 
     const description = document.createElement("span");
     description.className = "channel-description";
-    description.textContent = canal.descripcion || "Transmisión disponible";
+    description.textContent = "EN VIVO";
 
     info.append(name, description);
-    button.append(icon, info);
+    button.append(info);
 
     button.addEventListener("click", () => {
       seleccionarCanal(canal.id);
